@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, FormEvent, SetStateAction } from "react";
+import { Dispatch, FormEvent, SetStateAction, useEffect, useRef } from "react";
 import { ChatMessage } from "@/hooks/useChat";
 import { getEmotionLabel } from "@/lib/emotionMapping";
 
@@ -36,6 +36,14 @@ export const ChatPanel = ({
   isRecording,
   canRecordVoice,
 }: ChatPanelProps) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
+  }, [messages.length]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     void sendMessage();
@@ -43,7 +51,10 @@ export const ChatPanel = ({
 
   return (
     <section className="flex w-full flex-1 flex-col gap-4 rounded-2xl border border-zinc-200 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/70 max-h-[80vh]">
-      <div className="flex-1 space-y-4 overflow-y-auto rounded-xl bg-zinc-50/90 p-4 text-sm dark:bg-zinc-900/60 max-h-[60vh]">
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 space-y-4 overflow-y-auto rounded-xl bg-zinc-50/90 p-4 text-sm dark:bg-zinc-900/60 max-h-[60vh]"
+      >
         {messages.length === 0 && (
           <p className="text-center text-zinc-500">
             Companion에게 먼저 말을 걸어보세요.
