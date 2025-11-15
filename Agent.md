@@ -418,4 +418,4 @@ Step 4 – 음성(STT/TTS) 기능 추가 (Epic 4)
 
 /api/chat에서 tts_audio_url 리턴
 
-<AudioPlayer>에서 URL 기반 오디오 재생 + 재생시 mode='talking' 처리
+<AudioPlayer>에서 URL 기반 오디오 재생 

@@ -3,6 +3,7 @@ pyproject.toml
 app/__init__.py
 app/gemini_client.py
 app/main.py
+app/speech.py
 companion_backend.egg-info/PKG-INFO
 companion_backend.egg-info/SOURCES.txt
 companion_backend.egg-info/dependency_links.txt

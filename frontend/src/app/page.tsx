@@ -22,6 +22,10 @@ export default function Home() {
             readyToSend={chat.readyToSend}
             isLoading={chat.isLoading}
             error={chat.error}
+            startRecording={chat.startRecording}
+            stopRecording={chat.stopRecording}
+            isRecording={chat.isRecording}
+            canRecordVoice={chat.canRecordVoice}
           />
         </div>
       </main>

@@ -7,6 +7,8 @@ FastAPI application powering the companion project.
 ```bash
 cd backend
 pip install -e .[dev]
+# optional: install Whisper-based STT support
+pip install -e .[voice]
 # copy env template and fill in your Gemini key
 cp .env.example .env
 # then edit .env to set GEMINI_API_KEY
@@ -33,4 +35,15 @@ The app auto-loads `.env` at startup.
 }
 ```
 
-The `emotion` field feeds the frontend `VideoAvatar`, and `ttsDurationMs` instructs how long the avatar should remain in the `*_talking` state before falling back to `*_idle`.
+- `POST /api/voice` – accepts multipart form-data with an `audio` blob (webm/wav/etc). The backend transcribes the audio (Whisper if available, fallback otherwise), generates a Gemini response, and returns:
+
+```jsonc
+{
+  "transcript": "오늘 하루 좀 길었어.",
+  "reply": "그런 날엔 창밖 불빛을 잠깐 바라보는 것도 도움이 돼. 어떤 순간이 가장 길게 느껴졌어?",
+  "emotion": "sad",
+  "ttsDurationMs": 3600
+}
+```
+
+The `emotion` field feeds the frontend `VideoAvatar`, and `ttsDurationMs` instructs how long the avatar should remain in the `talking` state before falling back to `idle`. The UI also uses the `reply` to synthesize speech via the browser's built-in SpeechSynthesis engine.
